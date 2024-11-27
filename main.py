@@ -1,9 +1,8 @@
-import data
 from selenium import webdriver
-from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
+import data
 
 
 # no modificar
@@ -52,6 +51,35 @@ class UrbanRoutesPage:
 
     def get_to(self):
         return self.driver.find_element(*self.to_field).get_property('value')
+
+    def set_route(self, from_address, to_address):
+        self.set_from(from_address)
+        self.set_to(to_address)
+        self.get_from()
+        self.get_to()
+
+class UrbanRoutesTypePicker:
+    pedir_taxi_button = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[1]/div[3]/div[1]/button')
+
+    def __init__(self, driver):
+        self.driver = driver
+
+    def wait_for_pedir_taxi_button(self):
+        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located(*self.pedir_taxi_button))
+
+    def click_pedir_taxi_button(self):
+        self.driver.find_element(*self.pedir_taxi_button).click()
+
+    def pedir_taxi(self):
+        self.wait_for_pedir_taxi_button()
+        self.click_pedir_taxi_button()
+
+class UrbanRoutesComfortForm:
+    tariff_comfort = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[1]/div[5]/div[2]')
+    set_phone = (By.CLASS_NAME, 'np-text')
+    set_message_for_driver = (By.CLASS_NAME, 'label')
+
+
 
 
 
