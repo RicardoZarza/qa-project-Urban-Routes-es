@@ -1,9 +1,5 @@
-from cffi.cffi_opcode import CLASS_NAME
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-import data
 from data import message_for_driver
 from locators import UrbanRoutesLocators, UrbanRoutesComfortFormLocators, UrbanRoutesAddPhoneLocators, UrbanRoutesPaymentMethodLocators
 
@@ -108,13 +104,17 @@ class UrbanRoutesComfortForm:
         self.driver.find_element(*self.blanket_and_tissue_slider).click()
 
     def double_click_to_ask_for_two_icecream(self):
-        self.driver.find_element(*self.ice_cream_slider).double_click()
+        self.driver.find_element(*self.ice_cream_slider).click()
+        self.driver.find_element(*self.ice_cream_slider).click()
 
     def get_comment(self):
         return self.driver.find_element(*self.message_for_driver_box).get_property('value')
 
     def get_ice_cream_number(self):
-        return self.driver.find_element(*self.ice_cream_slider).get_property('counter-value')
+        return self.driver.find_element(*self.ice_cream_slider).get_property('value')
+
+    def get_blanket_tissues_confirmation(self):
+        return self.driver.find_element(*self.message_for_driver_box).get_property()
 
     def look_for_comfort_taxi(self, comment):
         self.wait_for_look_for_taxi_button()
@@ -140,7 +140,6 @@ class UrbanRoutesAddPhone:
 
     def __init__(self, driver):
         self.driver = driver
-        self.confirmation_code = retrieve_phone_code(self.driver)
 
     def wait_for_set_phone_button(self):
         WebDriverWait(self.driver, 20).until(expected_conditions.visibility_of_element_located(self.set_phone))
@@ -164,12 +163,8 @@ class UrbanRoutesAddPhone:
         WebDriverWait(self.driver, 20).until(expected_conditions.visibility_of_element_located(self.set_confirmation_code))
 
     def set_verification_code(self):
-        self.confirmation_code = retrieve_phone_code(self.driver)
-        self.driver.find_element(*self.set_confirmation_code).send_keys(self.confirmation_code)
-
-    def get_verification_code(self):
-        return self.driver.find_element(*self.set_confirmation_code).get_property('value')
-
+        confirmation_code = retrieve_phone_code(self.driver)
+        self.driver.find_element(*self.set_confirmation_code).send_keys(confirmation_code)
 
     def click_confirmation_button(self):
         self.driver.find_element(*self.confirmation_button).click()
@@ -183,13 +178,13 @@ class UrbanRoutesAddPhone:
         self.click_next_button()
         self.wait_for_verification_window()
         self.set_verification_code()
-        self.get_verification_code()
         self.click_confirmation_button()
 
 
 class UrbanRoutesPaymentMethod:
 
     select_payment_method_button = UrbanRoutesPaymentMethodLocators.SELECT_PAYMENT_METHOD_BUTTON
+    selected_pay_method = UrbanRoutesPaymentMethodLocators.SELECTED_PAY_METHOD
     add_card_info_button = UrbanRoutesPaymentMethodLocators.ADD_CARD_INFO_BUTTON
     set_card_number =  UrbanRoutesPaymentMethodLocators.SET_CARD_NUMBER
     set_card_code = UrbanRoutesPaymentMethodLocators.SET_CARD_CODE
@@ -202,13 +197,13 @@ class UrbanRoutesPaymentMethod:
         self.driver = driver
 
     def wait_for_payment_method_button(self):
-        WebDriverWait(self.driver, 20).until(expected_conditions.visibility_of_element_located(self.select_payment_method_button))
+        WebDriverWait(self.driver, 20).until(expected_conditions.presence_of_element_located(self.select_payment_method_button))
 
     def click_payment_method_button(self):
         self.driver.find_element(*self.select_payment_method_button).click()
 
     def wait_for_payment_options_window(self):
-        WebDriverWait(self.driver, 20).until((expected_conditions.visibility_of_element_located(self.add_card_button)))
+        WebDriverWait(self.driver, 20).until(expected_conditions.visibility_of_element_located(self.add_card_info_button))
 
     def click_add_card_info(self):
         self.driver.find_element(*self.add_card_info_button).click()

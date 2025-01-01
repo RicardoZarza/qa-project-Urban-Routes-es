@@ -1,8 +1,8 @@
 from selenium.webdriver.common.by import By
 
 class UrbanRoutesLocators:
-    FROM_FIELD = (By.XPATH, '//*[@id="from"]')
-    TO_FIELD = (By.XPATH, '//*[@id="to"]')
+    FROM_FIELD = (By.ID, 'from')
+    TO_FIELD = (By.ID, 'to')
 
 class UrbanRoutesComfortFormLocators:
     FLASH_OPTION_BUTTON = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[1]/div[1]/div[2]')
@@ -21,10 +21,11 @@ class UrbanRoutesAddPhoneLocators:
     CONFIRMATION_BUTTON = (By.XPATH, '//*[@id="root"]/div/div[1]/div[2]/div[2]/form/div[2]/button[1]')
 
 class UrbanRoutesPaymentMethodLocators:
-    SELECT_PAYMENT_METHOD_BUTTON = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[2]/div[2]')
-    ADD_CARD_INFO_BUTTON = (By.CLASS_NAME, 'pp-checkbox')
-    SET_CARD_NUMBER = (By.CLASS_NAME, 'card-number-input')
-    SET_CARD_CODE = (By.CLASS_NAME, 'card-code-input')
+    SELECT_PAYMENT_METHOD_BUTTON = (By.XPATH, "//*[@id='root']/div/div[3]/div[3]/div[2]/div[2]/div[2]/div[2]/div[3]")
+    SELECTED_PAY_METHOD = (By.CLASS_NAME), "pp-value-text"
+    ADD_CARD_INFO_BUTTON = (By.CLASS_NAME, 'pp-plus-container')
+    SET_CARD_NUMBER = (By.ID, 'number')
+    SET_CARD_CODE = (By.XPATH, "//input[@id='code'][@class='card-input']")
     CARD_SECOND_ROW = (By.CLASS_NAME, 'card-second-row')
     ADD_CARD_BUTTON = (By.XPATH, '//*[@id="root"]/div/div[2]/div[2]/div[2]/form/div[3]/button[1]')
     CLOSE_PAYMENT_METHODS_WINDOW_BUTTON = (By.XPATH, '//*[@id="root"]/div/div[2]/div[2]/div[1]/button')
