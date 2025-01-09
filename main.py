@@ -69,6 +69,7 @@ class UrbanRoutesComfortForm:
     message_for_driver_box = UrbanRoutesComfortFormLocators.MESSAGE_FOR_DRIVER_BOX
     blanket_and_tissue_slider = UrbanRoutesComfortFormLocators.BLANKET_AND_TISSUE_SLIDER
     ice_cream_slider = UrbanRoutesComfortFormLocators.ICE_CREAM_SLIDER
+    ice_cream_counter = UrbanRoutesComfortFormLocators.ICE_CREAM_COUNTER
 
     def __init__(self, driver):
         self.driver = driver
@@ -111,10 +112,13 @@ class UrbanRoutesComfortForm:
         return self.driver.find_element(*self.message_for_driver_box).get_property('value')
 
     def get_ice_cream_number(self):
-        return self.driver.find_element(*self.ice_cream_slider).get_property('value')
+        return self.driver.find_element(*self.ice_cream_counter).text
 
     def get_blanket_tissues_confirmation(self):
         return self.driver.find_element(*self.message_for_driver_box).get_property()
+
+    def get_slider_confirmation(self):
+        self.driver.find_element(*self.blanket_and_tissue_slider)
 
     def look_for_comfort_taxi(self, comment):
         self.wait_for_look_for_taxi_button()
@@ -129,6 +133,7 @@ class UrbanRoutesComfortForm:
         self.double_click_to_ask_for_two_icecream()
         self.get_comment()
         self.get_ice_cream_number()
+        self.get_slider_confirmation()
 
 
 class UrbanRoutesAddPhone:
@@ -137,6 +142,7 @@ class UrbanRoutesAddPhone:
     button_next = UrbanRoutesAddPhoneLocators.BUTTON_NEXT
     set_confirmation_code = UrbanRoutesAddPhoneLocators.SET_CONFIRMATION_CODE
     confirmation_button = UrbanRoutesAddPhoneLocators.CONFIRMATION_BUTTON
+    ask_for_taxi_button = UrbanRoutesPaymentMethodLocators.ASK_FOR_TAXI_BUTTON_ENABLE
 
     def __init__(self, driver):
         self.driver = driver
@@ -169,6 +175,9 @@ class UrbanRoutesAddPhone:
     def click_confirmation_button(self):
         self.driver.find_element(*self.confirmation_button).click()
 
+    def ask_for_taxi_enabled(self):
+        return self.driver.find_element(*self.ask_for_taxi_button).text
+
     def add_new_phone_number(self, number_phone):
         self.wait_for_set_phone_button()
         self.click_set_phone()
@@ -191,7 +200,6 @@ class UrbanRoutesPaymentMethod:
     card_second_row = UrbanRoutesPaymentMethodLocators.CARD_SECOND_ROW #se usa para hacer click y habilitar el botón de agregar
     add_card_button = UrbanRoutesPaymentMethodLocators.ADD_CARD_BUTTON
     close_payment_methods_window_button = UrbanRoutesPaymentMethodLocators.CLOSE_PAYMENT_METHODS_WINDOW_BUTTON
-
 
     def __init__(self, driver):
         self.driver = driver
@@ -235,6 +243,9 @@ class UrbanRoutesPaymentMethod:
     def click_close_window_button(self):
         self.driver.find_element(*self.close_payment_methods_window_button).click()
 
+    def confirm_payment_method(self):
+        return self.driver.find_element(*self.selected_pay_method).text
+
     def add_a_new_payment_card(self, number_card, code_card):
         self.wait_for_payment_method_button()
         self.click_payment_method_button()
@@ -247,4 +258,3 @@ class UrbanRoutesPaymentMethod:
         self.click_add_card_button()
         self.wait_for_card_info_window_closing()
         self.click_close_window_button()
-

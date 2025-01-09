@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 class UrbanRoutesLocators:
     FROM_FIELD = (By.ID, 'from')
     TO_FIELD = (By.ID, 'to')
+    ASK_FOR_TAXI = (By.CLASS_NAME, "smart-button-main")
 
 class UrbanRoutesComfortFormLocators:
     FLASH_OPTION_BUTTON = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[1]/div[1]/div[2]')
@@ -12,6 +13,7 @@ class UrbanRoutesComfortFormLocators:
     MESSAGE_FOR_DRIVER_BOX = (By.XPATH, '//*[@id="comment"]')
     BLANKET_AND_TISSUE_SLIDER = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[2]/div[4]/div[2]/div[1]/div/div[2]/div/span')
     ICE_CREAM_SLIDER = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[2]/div[4]/div[2]/div[3]/div/div[2]/div[1]/div/div[2]/div/div[3]')
+    ICE_CREAM_COUNTER = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[2]/div[4]/div[2]/div[3]/div/div[2]/div[1]/div/div[2]/div/div[2]')
 
 class UrbanRoutesAddPhoneLocators:
     SET_PHONE = (By.CLASS_NAME, 'np-text')
@@ -22,10 +24,11 @@ class UrbanRoutesAddPhoneLocators:
 
 class UrbanRoutesPaymentMethodLocators:
     SELECT_PAYMENT_METHOD_BUTTON = (By.XPATH, "//*[@id='root']/div/div[3]/div[3]/div[2]/div[2]/div[2]/div[2]/div[3]")
-    SELECTED_PAY_METHOD = (By.CLASS_NAME), "pp-value-text"
+    SELECTED_PAY_METHOD = (By.XPATH, "//*[@id='root']/div/div[3]/div[3]/div[2]/div[2]/div[2]/div[2]/div[1]")
     ADD_CARD_INFO_BUTTON = (By.CLASS_NAME, 'pp-plus-container')
     SET_CARD_NUMBER = (By.ID, 'number')
     SET_CARD_CODE = (By.XPATH, "//input[@id='code'][@class='card-input']")
     CARD_SECOND_ROW = (By.CLASS_NAME, 'card-second-row')
     ADD_CARD_BUTTON = (By.XPATH, '//*[@id="root"]/div/div[2]/div[2]/div[2]/form/div[3]/button[1]')
     CLOSE_PAYMENT_METHODS_WINDOW_BUTTON = (By.XPATH, '//*[@id="root"]/div/div[2]/div[2]/div[1]/button')
+    ASK_FOR_TAXI_BUTTON_ENABLE = (By.XPATH, '//*[@id="root"]/div/div[3]/div[4]/button/span[1]')
