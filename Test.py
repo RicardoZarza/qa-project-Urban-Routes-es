@@ -23,16 +23,25 @@ class TestUrbanRoutes:
         assert data.address_from == actual_address_from
         assert data.address_to == actual_address_to
 
-    def test_comfort_taxi_form(self):
+    def test_add_blanket_and_tissue(self):
         comfort_form = UrbanRoutesComfortForm(self.driver)
-        comfort_form.look_for_comfort_taxi(data.message_for_driver)
-        slider_locator = UrbanRoutesComfortFormLocators.BLANKET_AND_TISSUE_SLIDER
+        comfort_form.look_for_comfort_taxi()
+        comfort_form.add_blanket_option_checked()
+        actual_option_for_blanket_status = comfort_form.get_blanket_and_handkerchiefs_option_checked()
+        assert  actual_option_for_blanket_status == data.blanket_and_tissue
+
+    def test_add_comment_to_driver(self):
+        comfort_form = UrbanRoutesComfortForm(self.driver)
+        comfort_form.add_comment_for_driver(data.message_for_driver)
         actual_message_for_driver = comfort_form.get_comment()
-        actual_icecream_number = comfort_form.get_ice_cream_number()
-        slider = self.driver.find_element(*slider_locator)
-        assert actual_icecream_number == data.ice_cream_number
         assert actual_message_for_driver == data.message_for_driver
-        assert slider.is_selected()
+
+    def test_ask_for_two_icecream(self):
+        comfort_form = UrbanRoutesComfortForm(self.driver)
+        comfort_form.ask_for_ice_cream()
+        actual_number_of_iceream = comfort_form.get_ice_cream_number()
+        assert actual_number_of_iceream == data.ice_cream_number
+
 
     def test_add_card(self):
         add_card_page = UrbanRoutesPaymentMethod(self.driver)

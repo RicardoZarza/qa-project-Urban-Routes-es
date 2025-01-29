@@ -67,7 +67,8 @@ class UrbanRoutesComfortForm:
     look_for_taxi_button = UrbanRoutesComfortFormLocators.LOOK_FOR_TAXI_BUTTON
     comfort_taxi_option = UrbanRoutesComfortFormLocators.COMFORT_TAXI_OPTION
     message_for_driver_box = UrbanRoutesComfortFormLocators.MESSAGE_FOR_DRIVER_BOX
-    blanket_and_tissue_slider = UrbanRoutesComfortFormLocators.BLANKET_AND_TISSUE_SLIDER
+    option_switches_inputs = UrbanRoutesComfortFormLocators.option_switches_inputs
+    option_switches = UrbanRoutesComfortFormLocators.option_switches
     ice_cream_slider = UrbanRoutesComfortFormLocators.ICE_CREAM_SLIDER
     ice_cream_counter = UrbanRoutesComfortFormLocators.ICE_CREAM_COUNTER
 
@@ -101,8 +102,10 @@ class UrbanRoutesComfortForm:
     def wait_for_comment(self):
         WebDriverWait(self.driver, 20).until(expected_conditions.visibility_of_element_located(message_for_driver))
 
-    def click_to_ask_for_blanket_and_tissues(self):
-        self.driver.find_element(*self.blanket_and_tissue_slider).click()
+    def click_blanket_and_handkerchiefs_option(self):
+        switches = self.driver.find_elements(*self.option_switches)
+        switches[0].click()
+        self.get_blanket_and_handkerchiefs_option_checked()
 
     def double_click_to_ask_for_two_icecream(self):
         self.driver.find_element(*self.ice_cream_slider).click()
@@ -114,26 +117,32 @@ class UrbanRoutesComfortForm:
     def get_ice_cream_number(self):
         return self.driver.find_element(*self.ice_cream_counter).text
 
-    def get_blanket_tissues_confirmation(self):
-        return self.driver.find_element(*self.message_for_driver_box).get_property()
+    def get_blanket_and_handkerchiefs_option_checked(self):
+        switches = self.driver.find_elements(*self.option_switches_inputs)
+        return switches[0].get_property('checked')
 
-    def get_slider_confirmation(self):
-        self.driver.find_element(*self.blanket_and_tissue_slider)
-
-    def look_for_comfort_taxi(self, comment):
+    def look_for_comfort_taxi(self):
         self.wait_for_look_for_taxi_button()
         self.click_flash_option()
         self.click_taxi_option()
         self.click_look_for_taxi_button()
         self.wait_for_taxi_types_list()
         self.click_comfort_option()
+
+    def add_comment_for_driver(self, comment):
         self.wait_for_comfort_form()
         self.write_a_comment_to_driver(comment)
-        self.click_to_ask_for_blanket_and_tissues()
-        self.double_click_to_ask_for_two_icecream()
         self.get_comment()
+
+    def add_blanket_option_checked(self):
+        self.wait_for_comfort_form()
+        self.click_blanket_and_handkerchiefs_option()
+        self.get_blanket_and_handkerchiefs_option_checked()
+
+    def ask_for_ice_cream(self):
+        self.wait_for_comfort_form()
+        self.double_click_to_ask_for_two_icecream()
         self.get_ice_cream_number()
-        self.get_slider_confirmation()
 
 
 class UrbanRoutesAddPhone:
